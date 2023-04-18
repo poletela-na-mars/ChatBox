@@ -1,0 +1,32 @@
+.root {
+  margin-top: 32px;
+  height: calc(100vh - 50vh);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.rootForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  min-width: 280px;
+}
+
+.buttonGroup {
+  width: 100%;
+  padding: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.gradientText {
+  background: -webkit-linear-gradient(45deg, #0033FF, #C582E5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
