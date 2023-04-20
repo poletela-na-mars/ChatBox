@@ -1,12 +1,3 @@
-.root {
-  margin-top: 32px;
-  height: 50vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
 .rootForm {
   display: flex;
   flex-direction: column;
@@ -14,15 +5,6 @@
   align-items: center;
   width: 50%;
   min-width: 280px;
-}
-
-.buttonGroup {
-  width: 100%;
-  padding: 0;
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: flex-end;
-  align-items: center;
 }
 
 .gradientText {

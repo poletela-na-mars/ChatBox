@@ -9,6 +9,7 @@ export const theme = {
         //variants
         h6: {
             fontWeight: 'bold',
+            fontSize: '22px',
         },
         button: {
           fontWeight: 'bold',
@@ -34,7 +35,7 @@ export const getDesignTokens = (mode: PaletteMode) => ({
                 secondary: {
                     light: '#F5F5F5',
                     main: '#999999',
-                    dark: '',
+                    dark: '#C582E5',
                 },
                 // divider: amber[200],
                 text: {
