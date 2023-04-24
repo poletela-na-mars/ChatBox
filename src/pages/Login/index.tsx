@@ -1,6 +1,7 @@
 import { useFormik } from 'formik';
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
 import * as yup from 'yup';
+import { generateUserPassword } from '../../utils/passwordGenerator';
 
 import { Button, Container, IconButton, InputAdornment, styled, TextField, Typography } from '@mui/material';
 
@@ -12,14 +13,14 @@ import styles from './Login.module.scss';
 import { useState } from 'react';
 
 const validationSchema = yup.object({
-  userId: yup
-      .string().matches(/^[0-9a-f]{8}-?[0-9a-f]{4}-?[1-5][0-9a-f]{3}-?[89ab][0-9a-f]{3}-?[0-9a-f]{12}$/i,
-          {message: 'User ID isn\'t correct'})
-      .required('User ID is required'),
+  password: yup
+      .string().matches(/^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8,}$/,
+          {message: 'Password should contain at least 2 letters in Upper and 3 letters in Lower Case, 1 special character (!@#$&*), 2 numerals (0-9))'})
+      .required('Password is required'),
   name: yup
       .string()
-      .min(2, 'Incorrect Name')
-      .max(50, 'Incorrect Name')
+      .min(2, 'Name is too short')
+      .max(50, 'Name is too long')
       .required('Name is required'),
 });
 
@@ -28,7 +29,8 @@ const LoginTextField = styled(TextField)(({theme}) => ({
   size: 'medium',
   type: 'text',
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: 'white',
+  backgroundColor: theme.palette.primary.main,
+  textColor: theme.palette.text.primary,
   boxShadow: 'rgba(50, 50, 93, 0.25) 0px 4px 12px -20px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px',
   '& fieldset': {border: 'none'},
   '& .MuiFormHelperText-root.Mui-error': {
@@ -41,7 +43,7 @@ export const Login = (): JSX.Element => {
   const [copied, setCopied] = useState(false);
   const formik = useFormik({
     initialValues: {
-      userId: '',
+      password: '',
       name: '',
     },
     enableReinitialize: true,
@@ -53,13 +55,13 @@ export const Login = (): JSX.Element => {
 
   const theme = useTheme();
 
-  const generateUserId = (): void => {
-    formik.setFieldValue('userId', uuidv4());
+  const generatePassword = (): void => {
+    formik.setFieldValue('password', generateUserPassword());
     setCopied(false);
   };
 
   const copyToClipboard = async (): Promise<void> => {
-    await navigator.clipboard.writeText(formik.values.userId);
+    await navigator.clipboard.writeText(formik.values.password);
     setCopied(true);
   };
 
@@ -67,7 +69,7 @@ export const Login = (): JSX.Element => {
       <Container
           maxWidth='lg'
           sx={{
-            marginTop: 4,
+            marginTop: 6,
             height: 'calc(100vh - 50vh)',
             display: 'flex',
             flexDirection: 'column',
@@ -76,7 +78,7 @@ export const Login = (): JSX.Element => {
           }}
       >
         <Typography component='h2' variant='h6' fontSize={18} align='center' className={styles.gradientText}>
-          Enter your name and ID to login or register
+          Enter your name and password to login or register
         </Typography>
         <form onSubmit={formik.handleSubmit} className={styles.rootForm}>
           <LoginTextField
@@ -94,36 +96,33 @@ export const Login = (): JSX.Element => {
           <LoginTextField
               fullWidth
               inputProps={{maxLength: 50}}
-              placeholder='156Ihjk555...'
-              id='userId'
-              name='userId'
-              value={formik.values.userId}
+              placeholder='Your password'
+              id='password'
+              name='password'
+              value={formik.values.password}
               onChange={formik.handleChange}
-              error={formik.touched.userId && Boolean(formik.errors.userId)}
-              helperText={formik.touched.userId && formik.errors.userId}
-              sx={{margin: '0 32px 16px 32px'}}
+              error={formik.touched.password && Boolean(formik.errors.password)}
+              helperText={formik.touched.password && formik.errors.password}
+              sx={{margin: '0 32px 74px 32px'}}
               InputProps={{
                 endAdornment:
                     <InputAdornment position='end' sx={{marginRight: 1}}>
                       <IconButton
                           onClick={copyToClipboard}
-                          sx={{color: `${copied ? theme.palette.secondary.dark : theme.palette.primary.main}`}}
+                          sx={{color: `${copied ? theme.palette.secondary.dark : theme.palette.primary.light}`}}
                       >
                         <ContentCopyRoundedIcon />
                       </IconButton>
                       <IconButton
-                          onClick={generateUserId}
+                          onClick={generatePassword}
                           edge='end'
-                          color='primary'
+                          sx={{color: theme.palette.primary.light}}
                       >
                         <AutorenewRoundedIcon />
                       </IconButton>
                     </InputAdornment>
               }}
           />
-          <Typography color={theme.palette.secondary.main} sx={{marginBottom: 2}}>
-            Save your ID to login next times
-          </Typography>
           <Container
               sx={{
                 display: 'flex',

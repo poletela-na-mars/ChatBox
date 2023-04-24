@@ -1,3 +1,9 @@
+.gradientText {
+  background: -webkit-linear-gradient(45deg, #0033FF, #C582E5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .rootForm {
   display: flex;
   flex-direction: column;
@@ -5,12 +11,6 @@
   align-items: center;
   width: 50%;
   min-width: 280px;
-}
-
-.gradientText {
-  background: -webkit-linear-gradient(45deg, #0033FF, #C582E5);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 /*# sourceMappingURL=Login.module.css.map */

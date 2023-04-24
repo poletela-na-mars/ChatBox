@@ -20,7 +20,6 @@ export const theme = {
     },
 };
 
-// TODO - change to custom colors
 export const getDesignTokens = (mode: PaletteMode) => ({
     palette: {
         mode,
@@ -29,7 +28,7 @@ export const getDesignTokens = (mode: PaletteMode) => ({
                 // palette values for light mode
                 primary: {
                     light: '#0033FF',
-                    main: '#0033FF',
+                    main: '#FFF',
                     dark: '#000033',
                 },
                 secondary: {
@@ -39,7 +38,7 @@ export const getDesignTokens = (mode: PaletteMode) => ({
                 },
                 // divider: amber[200],
                 text: {
-                    main: '#0033FF',
+                    // primary: '#999999',
 
                 },
             }
@@ -48,12 +47,12 @@ export const getDesignTokens = (mode: PaletteMode) => ({
                 primary: {
                     light: '#0033FF',
                     main: '#000066',
-                    dark: '#000033',
+                    dark: '#F5F5F5',
                 },
                 secondary: {
-                    light: '',
-                    main: '',
-                    dark: '',
+                    light: '#000033',
+                    main: '#C582E5',
+                    dark: '#C582E5',
                 },
                 // divider: deepOrange[700],
                 // background: {
@@ -62,6 +61,7 @@ export const getDesignTokens = (mode: PaletteMode) => ({
                 // },
                 text: {
                     // primary: '#fff',
+                    primary: '#FFF',
                     // secondary: grey[500],
                 },
             }),

@@ -1,3 +1,5 @@
+@import './../../vars';
+
 //.root {
 //  margin-top: 32px;
 //  height: calc(100vh - 50vh);
@@ -25,8 +27,8 @@
 //  align-items: center;
 //}
 
-.gradientText {
-  background: -webkit-linear-gradient(45deg, #0033FF, #C582E5);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
+//.gradientText {
+//  background: -webkit-linear-gradient(45deg, #0033FF, #C582E5);
+//  -webkit-background-clip: text;
+//  -webkit-text-fill-color: transparent;
+//}

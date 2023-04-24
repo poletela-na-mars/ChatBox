@@ -9,4 +9,10 @@ $dark-gray-color: rgba(0,0,0,.1);
 $light-rounded-border-radius: 6px;
 $rounded-border-radius: 10px;
 
+.gradientText {
+  background: -webkit-linear-gradient(45deg, #0033FF, #C582E5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 //TODO - set color palette
