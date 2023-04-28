@@ -1,16 +1,16 @@
+import { useState } from 'react';
 import { useFormik } from 'formik';
-// import { v4 as uuidv4 } from 'uuid';
 import * as yup from 'yup';
 import { generateUserPassword } from '../../utils/passwordGenerator';
 
-import { Button, Container, IconButton, InputAdornment, styled, TextField, Typography } from '@mui/material';
+import { LoginTextField } from './LoginTextField';
+import { Button, Container, IconButton, InputAdornment, Typography } from '@mui/material';
 
 import { useTheme } from '@mui/material/styles';
 import AutorenewRoundedIcon from '@mui/icons-material/AutorenewRounded';
 import ContentCopyRoundedIcon from '@mui/icons-material/ContentCopyRounded';
 
 import styles from './Login.module.scss';
-import { useState } from 'react';
 
 const validationSchema = yup.object({
   password: yup
@@ -24,29 +24,15 @@ const validationSchema = yup.object({
       .required('Name is required'),
 });
 
-const LoginTextField = styled(TextField)(({theme}) => ({
-  hiddenLabel: true,
-  size: 'medium',
-  type: 'text',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: theme.palette.primary.main,
-  textColor: theme.palette.text.primary,
-  boxShadow: 'rgba(50, 50, 93, 0.25) 0px 4px 12px -20px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px',
-  '& fieldset': {border: 'none'},
-  '& .MuiFormHelperText-root.Mui-error': {
-    position: 'absolute',
-    top: '100%',
-  },
-}));
-
 export const Login = (): JSX.Element => {
   const [copied, setCopied] = useState(false);
-  const formik = useFormik({
+  const {touched, errors, isSubmitting, handleSubmit, handleChange, values, setFieldValue} = useFormik({
     initialValues: {
       password: '',
       name: '',
     },
     enableReinitialize: true,
+    validateOnChange: true,
     validationSchema: validationSchema,
     onSubmit: (values: object) => {
       alert(JSON.stringify(values, null, 2));
@@ -56,14 +42,16 @@ export const Login = (): JSX.Element => {
   const theme = useTheme();
 
   const generatePassword = (): void => {
-    formik.setFieldValue('password', generateUserPassword());
+    setFieldValue('password', generateUserPassword());
     setCopied(false);
   };
 
   const copyToClipboard = async (): Promise<void> => {
-    await navigator.clipboard.writeText(formik.values.password);
+    await navigator.clipboard.writeText(values.password);
     setCopied(true);
   };
+
+  //TODO - react intl
 
   return (
       <Container
@@ -80,17 +68,17 @@ export const Login = (): JSX.Element => {
         <Typography component='h2' variant='h6' fontSize={18} align='center' className={styles.gradientText}>
           Enter your name and password to login or register
         </Typography>
-        <form onSubmit={formik.handleSubmit} className={styles.rootForm}>
+        <form onSubmit={handleSubmit} className={styles.rootForm}>
           <LoginTextField
               fullWidth
               inputProps={{maxLength: 50}}
               placeholder='John Bell'
               id='name'
               name='name'
-              value={formik.values.name}
-              onChange={formik.handleChange}
-              error={formik.touched.name && Boolean(formik.errors.name)}
-              helperText={formik.touched.name && formik.errors.name}
+              value={values.name}
+              onChange={handleChange}
+              error={touched.name && Boolean(errors.name)}
+              helperText={touched.name && errors.name}
               sx={{margin: '32px 32px 32px 32px'}}
           />
           <LoginTextField
@@ -99,10 +87,10 @@ export const Login = (): JSX.Element => {
               placeholder='Your password'
               id='password'
               name='password'
-              value={formik.values.password}
-              onChange={formik.handleChange}
-              error={formik.touched.password && Boolean(formik.errors.password)}
-              helperText={formik.touched.password && formik.errors.password}
+              value={values.password}
+              onChange={handleChange}
+              error={touched.password && Boolean(errors.password)}
+              helperText={touched.password && errors.password}
               sx={{margin: '0 32px 74px 32px'}}
               InputProps={{
                 endAdornment:
@@ -143,6 +131,7 @@ export const Login = (): JSX.Element => {
                 variant='contained'
                 size='medium'
                 type='submit'
+                disabled={isSubmitting}
             >
               Register
             </Button>
@@ -155,6 +144,7 @@ export const Login = (): JSX.Element => {
                 variant='contained'
                 size='medium'
                 type='submit'
+                disabled={isSubmitting}
             >
               Login
             </Button>
