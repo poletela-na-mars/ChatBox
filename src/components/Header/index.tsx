@@ -5,22 +5,26 @@ import { useTheme } from '@mui/material/styles';
 
 type HeaderProps = {
   modeSwitch: () => void;
+  langSwitch: () => void;
 };
 
-export const Header = ({modeSwitch}: HeaderProps): JSX.Element => {
+export const Header = ({modeSwitch, langSwitch}: HeaderProps): JSX.Element => {
   const theme = useTheme();
 
   return (
       <Box sx={{flexGrow: 1, textAlign: 'center'}}>
         <AppBar position='static' color='transparent' elevation={0} sx={{height: '80px'}}>
           <Toolbar>
-            <Typography color={theme.palette.primary.light} variant='h6' component='h1' sx={{flexGrow: 1, marginLeft: 10}}>
+            <Typography color={theme.palette.primary.light} variant='h6' component='h1'
+                        sx={{flexGrow: 1, marginLeft: 10}}>
               ChatBox
             </Typography>
-            <IconButton size='large' sx={{color: theme.palette.primary.light, mr: 2}} aria-label='change language'>
+            <IconButton size='large' sx={{color: theme.palette.primary.light, mr: 2}} onClick={() => langSwitch()}
+                        aria-label='change language'>
               <LanguageRoundedIcon />
             </IconButton>
-            <IconButton size='large' sx={{color: theme.palette.primary.light}} onClick={() => modeSwitch()} aria-label='change theme'>
+            <IconButton size='large' sx={{color: theme.palette.primary.light}} onClick={() => modeSwitch()}
+                        aria-label='change theme'>
               <Brightness4RoundedIcon />
             </IconButton>
           </Toolbar>

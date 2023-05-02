@@ -11,10 +11,11 @@ import AutorenewRoundedIcon from '@mui/icons-material/AutorenewRounded';
 import ContentCopyRoundedIcon from '@mui/icons-material/ContentCopyRounded';
 
 import styles from './Login.module.scss';
+import { FormattedMessage } from 'react-intl';
 
 const validationSchema = yup.object({
   password: yup
-      .string().matches(/^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8,}$/,
+      .string().matches(/^(?=.*[A-ZЁА-Я].*[A-ZЁёА-Я])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-zёа-я].*[a-zёа-я].*[a-zёа-я]).{8,}$/,
           {message: 'Password should contain at least 2 letters in Upper and 3 letters in Lower Case, 1 special character (!@#$&*), 2 numerals (0-9))'})
       .required('Password is required'),
   name: yup
@@ -51,8 +52,6 @@ export const Login = (): JSX.Element => {
     setCopied(true);
   };
 
-  //TODO - react intl
-
   return (
       <Container
           maxWidth='lg'
@@ -66,7 +65,10 @@ export const Login = (): JSX.Element => {
           }}
       >
         <Typography component='h2' variant='h6' fontSize={18} align='center' className={styles.gradientText}>
-          Enter your name and password to login or register
+          <FormattedMessage
+              id = 'login'
+              defaultMessage='Enter your name and password to login or register'
+          />
         </Typography>
         <form onSubmit={handleSubmit} className={styles.rootForm}>
           <LoginTextField

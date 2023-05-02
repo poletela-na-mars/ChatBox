@@ -1,7 +1,7 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { Header } from './components';
+import { Header, LangContext } from './components';
 import { Login, NotFound } from './pages';
 
 import { Container, createTheme, GlobalStyles, PaletteMode, ThemeProvider } from '@mui/material';
@@ -9,6 +9,7 @@ import { getDesignTokens, theme } from './theme';
 
 const App = (): JSX.Element => {
   const [mode, setMode] = useState<PaletteMode>('light');
+  const langContext = useContext(LangContext);
 
   const changeMode = (prevMode: PaletteMode) => {
     return prevMode === 'light' ? 'dark' : 'light';
@@ -40,6 +41,15 @@ const App = (): JSX.Element => {
     }
   }, []);
 
+  useEffect(() => {
+    const existingLang = localStorage.getItem('chatbox-lang');
+    if (existingLang) {
+      langContext.recoverLanguage(existingLang);
+    } else {
+      localStorage.setItem('chatbox-lang', langContext.locale);
+    }
+  }, []);
+
   const ColorModeContext = createContext(colorMode);
   const themeWithMode = React.useMemo(() => {
     return createTheme(theme, getDesignTokens(mode));
@@ -53,7 +63,7 @@ const App = (): JSX.Element => {
             }}
         />
         <ThemeProvider theme={themeWithMode}>
-          <Header modeSwitch={colorMode.toggleColorMode} />
+          <Header modeSwitch={colorMode.toggleColorMode} langSwitch={langContext.selectLanguage} />
           <Container maxWidth='lg'>
             <Routes>
               <Route path='*' element={<NotFound />} />
