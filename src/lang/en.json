@@ -1,3 +1,12 @@
 {
-  "login": "Enter your name and password to login or register"
+  "login.main": "Enter your name and password to login or register",
+  "login.placeholder.name": "John Bell",
+  "login.placeholder.password": "Your password",
+  "login.button.register": "Register",
+  "login.button.login": "Login",
+  "login.validation.password.regexp": "Password should contain at least 2 letters in Upper and 3 letters in Lower Case, 1 special character (!@#$&*), 2 numerals (0-9))",
+  "login.validation.password.req": "Password is required",
+  "login.validation.name.short": "Name is too short",
+  "login.validation.name.long": "Name is too long",
+  "login.validation.name.req": "Name is required"
 }

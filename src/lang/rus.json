@@ -1,3 +1,12 @@
 {
-  "login": "Введите свое имя и пароль, чтобы войти или зарегистрироваться"
+  "login.main": "Введите свое имя и пароль, чтобы войти или зарегистрироваться",
+  "login.placeholder.name": "Дмитрий Соколов",
+  "login.placeholder.password": "Ваш пароль",
+  "login.button.register": "Зарегистрироваться",
+  "login.button.login": "Войти",
+  "login.validation.password.regexp": "Пароль должен содержать как минимум 2 заглавные буквы и 3 прописные, 1 спец. символ (!@#$&*), 2 цифры (0-9))",
+  "login.validation.password.req": "Требуется указать пароль",
+  "login.validation.name.short": "Имя слишком короткое",
+  "login.validation.name.long": "Имя слишком длинное",
+  "login.validation.name.req": "Требуется указать имя"
 }

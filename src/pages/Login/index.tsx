@@ -1,32 +1,22 @@
 import { useState } from 'react';
 import { useFormik } from 'formik';
-import * as yup from 'yup';
 import { generateUserPassword } from '../../utils/passwordGenerator';
+import { validationSchema } from './validationSchema';
 
 import { LoginTextField } from './LoginTextField';
 import { Button, Container, IconButton, InputAdornment, Typography } from '@mui/material';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { useTheme } from '@mui/material/styles';
 import AutorenewRoundedIcon from '@mui/icons-material/AutorenewRounded';
 import ContentCopyRoundedIcon from '@mui/icons-material/ContentCopyRounded';
 
 import styles from './Login.module.scss';
-import { FormattedMessage } from 'react-intl';
-
-const validationSchema = yup.object({
-  password: yup
-      .string().matches(/^(?=.*[A-ZЁА-Я].*[A-ZЁёА-Я])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-zёа-я].*[a-zёа-я].*[a-zёа-я]).{8,}$/,
-          {message: 'Password should contain at least 2 letters in Upper and 3 letters in Lower Case, 1 special character (!@#$&*), 2 numerals (0-9))'})
-      .required('Password is required'),
-  name: yup
-      .string()
-      .min(2, 'Name is too short')
-      .max(50, 'Name is too long')
-      .required('Name is required'),
-});
 
 export const Login = (): JSX.Element => {
   const [copied, setCopied] = useState(false);
+  const intl = useIntl();
+
   const {touched, errors, isSubmitting, handleSubmit, handleChange, values, setFieldValue} = useFormik({
     initialValues: {
       password: '',
@@ -34,7 +24,7 @@ export const Login = (): JSX.Element => {
     },
     enableReinitialize: true,
     validateOnChange: true,
-    validationSchema: validationSchema,
+    validationSchema: validationSchema(intl),
     onSubmit: (values: object) => {
       alert(JSON.stringify(values, null, 2));
     },
@@ -42,7 +32,7 @@ export const Login = (): JSX.Element => {
 
   const theme = useTheme();
 
-  const generatePassword = (): void => {
+  const setGeneratedPasswordInField = (): void => {
     setFieldValue('password', generateUserPassword());
     setCopied(false);
   };
@@ -65,16 +55,13 @@ export const Login = (): JSX.Element => {
           }}
       >
         <Typography component='h2' variant='h6' fontSize={18} align='center' className={styles.gradientText}>
-          <FormattedMessage
-              id = 'login'
-              defaultMessage='Enter your name and password to login or register'
-          />
+          <FormattedMessage id='login.main' />
         </Typography>
         <form onSubmit={handleSubmit} className={styles.rootForm}>
           <LoginTextField
               fullWidth
               inputProps={{maxLength: 50}}
-              placeholder='John Bell'
+              placeholder={intl.formatMessage({id: 'login.placeholder.name'})}
               id='name'
               name='name'
               value={values.name}
@@ -86,7 +73,7 @@ export const Login = (): JSX.Element => {
           <LoginTextField
               fullWidth
               inputProps={{maxLength: 50}}
-              placeholder='Your password'
+              placeholder={intl.formatMessage({id: 'login.placeholder.password'})}
               id='password'
               name='password'
               value={values.password}
@@ -104,7 +91,7 @@ export const Login = (): JSX.Element => {
                         <ContentCopyRoundedIcon />
                       </IconButton>
                       <IconButton
-                          onClick={generatePassword}
+                          onClick={setGeneratedPasswordInField}
                           edge='end'
                           sx={{color: theme.palette.primary.light}}
                       >
@@ -128,27 +115,29 @@ export const Login = (): JSX.Element => {
                   backgroundColor: theme.palette.secondary.main,
                   marginRight: '32px',
                   textTransform: 'none',
-                  width: '120px'
+                  paddingRight: '20px',
+                  paddingLeft: '20px',
                 }}
                 variant='contained'
                 size='medium'
                 type='submit'
                 disabled={isSubmitting}
             >
-              Register
+              <FormattedMessage id='login.button.register' />
             </Button>
             <Button
                 style={{
                   backgroundColor: theme.palette.primary.light,
                   textTransform: 'none',
-                  width: '100px'
+                  paddingRight: '20px',
+                  paddingLeft: '20px',
                 }}
                 variant='contained'
                 size='medium'
                 type='submit'
                 disabled={isSubmitting}
             >
-              Login
+              <FormattedMessage id='login.button.login' />
             </Button>
           </Container>
         </form>
